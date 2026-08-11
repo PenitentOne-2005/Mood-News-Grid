@@ -1,0 +1,30 @@
+export type Mood = "happy" | "sad" | "neutral" | "ironic";
+
+interface MoodOption {
+  value: Mood;
+  label: string;
+  emoji: string;
+}
+
+export const MOODS: MoodOption[] = [
+  {
+    value: "happy",
+    label: "Радостно",
+    emoji: "😊",
+  },
+  {
+    value: "sad",
+    label: "Грустно",
+    emoji: "😢",
+  },
+  {
+    value: "neutral",
+    label: "Нейтрально",
+    emoji: "😐",
+  },
+  {
+    value: "ironic",
+    label: "Иронично",
+    emoji: "😏",
+  },
+];
