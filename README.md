@@ -411,16 +411,16 @@ Fact Validator
 
 ### Главная страница
 
-![Главная страница](./screenshots/home.png)
+![Главная страница](./news-mood/screenshots/home.png)
 
 ### Список новостей
 
-![Список новостей](./screenshots/news.png)
+![Список новостей](./news-mood/screenshots/news.png)
 
 ### Страница новости
 
-![Страница новости](./screenshots/news-detail-header.png)
+![Страница новости](./news-mood/screenshots/news-detail-header.png)
 
-![Страница новости](./screenshots/news-detail-main.png)
+![Страница новости](./news-mood/screenshots/news-detail-main.png)
 
-![Страница новости](./screenshots/news-detail-footer.png)
+![Страница новости](./news-mood/screenshots/news-detail-footer.png)
