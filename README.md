@@ -1,4 +1,3 @@
-[README(1).md](https://github.com/user-attachments/files/30976263/README.1.md)
 # News Mood
 
 Веб-приложение для просмотра реальных новостей и их переписывания в разных эмоциональных стилях: `happy`, `sad`, `neutral`, `ironic`.
@@ -32,7 +31,7 @@
 
 Склонировать репозиторий:
 
-git clone <repository-url>
+git clone https://github.com/PenitentOne-2005/Mood-News-Grid.git
 cd news-mood
 
 ```bash
