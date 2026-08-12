@@ -343,7 +343,7 @@ GUARDIAN_API_URL="https://content.guardianapis.com/search"
 - Prisma migrations применены;
 - `GROQ_API_KEY` указан корректно;
 - `GUARDIAN_API_KEY` указан корректно;
-- `GUARDIAN_API_URL` указан корректно
+- `GUARDIAN_API_URL` указан корректно.
 
 ## Скрипты
 
