@@ -405,3 +405,22 @@ Fact Validator
 Главный принцип проекта:
 
 > **AI может менять настроение текста, но не должен менять факты.**
+
+
+## Screenshots
+
+### Главная страница
+
+![Главная страница](./screenshots/home.png)
+
+### Список новостей
+
+![Список новостей](./screenshots/news.png)
+
+### Страница новости
+
+![Страница новости](./screenshots/news-detail-header.png)
+
+![Страница новости](./screenshots/news-detail-main.png)
+
+![Страница новости](./screenshots/news-detail-footer.png)
