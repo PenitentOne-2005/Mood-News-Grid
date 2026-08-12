@@ -332,6 +332,8 @@ curl -X POST \
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/news_mood?schema=public"
 GROQ_API_KEY="your_groq_api_key"
+GUARDIAN_API_KEY="your_guardian_api_key"
+GUARDIAN_API_URL="https://content.guardianapis.com/search"
 ```
 
 Перед запуском убедитесь, что:
@@ -339,7 +341,9 @@ GROQ_API_KEY="your_groq_api_key"
 - PostgreSQL запущен;
 - `DATABASE_URL` указывает на доступную базу;
 - Prisma migrations применены;
-- `GROQ_API_KEY` указан корректно.
+- `GROQ_API_KEY` указан корректно;
+- `GUARDIAN_API_KEY` указан корректно;
+- `GUARDIAN_API_URL` указан корректно
 
 ## Скрипты
 
