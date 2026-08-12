@@ -186,7 +186,7 @@ POST /api/news/mood
 llama-3.3-70b-versatile
 ```
 
-AI должен менять только способ подачи информации:
+AI менят только способ подачи информации:
 
 - лексику;
 - эмоциональный тон;
@@ -194,7 +194,7 @@ AI должен менять только способ подачи информ
 - структуру предложений;
 - стилистические элементы.
 
-При этом нельзя изменять фактическую информацию.
+При этом не изменяет фактическую информацию.
 
 ## Контроль сохранения фактов
 
@@ -313,24 +313,6 @@ curl -X POST \
   }'
 ```
 
-Для проверки фактов используется endpoint:
-
-```text
-POST /api/news/mood/validate
-```
-
-Пример:
-
-```bash
-curl -X POST \
-  http://localhost:3000/api/news/mood/validate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "originalContent": "Researchers examined 128 online posts.",
-    "rewrittenContent": "Researchers examined 500 online posts."
-  }'
-```
-
 Ожидаемый результат:
 
 ```json
@@ -350,6 +332,8 @@ curl -X POST \
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/news_mood?schema=public"
 GROQ_API_KEY="your_groq_api_key"
+GUARDIAN_API_KEY="your_guardian_api_key"
+GUARDIAN_API_URL="https://content.guardianapis.com/search"
 ```
 
 Перед запуском убедитесь, что:
@@ -357,7 +341,9 @@ GROQ_API_KEY="your_groq_api_key"
 - PostgreSQL запущен;
 - `DATABASE_URL` указывает на доступную базу;
 - Prisma migrations применены;
-- `GROQ_API_KEY` указан корректно.
+- `GROQ_API_KEY` указан корректно;
+- `GUARDIAN_API_KEY` указан корректно;
+- `GUARDIAN_API_URL` указан корректно.
 
 ## Скрипты
 
