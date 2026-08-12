@@ -1,14 +1,15 @@
+import type { MoodValidationResult } from "@/features/news/types";
 import { groq } from "@/shared/lib/groq";
-import type { MoodValidationResult } from "../../types";
 
 function extractNumbers(text: string): string[] {
-  return text.match(/\d+([.,]\d+)?%?/g) ?? [];
+  return text.match(/\d+(?:[.,]\d+)?%?/g) ?? [];
 }
 
 function checkNumbersPreserved(original: string, rewritten: string): string[] {
-  const origNums = extractNumbers(original);
-  const rewrittenNums = new Set(extractNumbers(rewritten));
-  return origNums.filter((n) => !rewrittenNums.has(n));
+  const originalNumbers = extractNumbers(original);
+  const rewrittenNumbers = new Set(extractNumbers(rewritten));
+
+  return originalNumbers.filter((number) => !rewrittenNumbers.has(number));
 }
 
 export const factValidator = {
@@ -32,24 +33,55 @@ export const factValidator = {
           role: "system",
           content: `
 You are a strict factual validator for rewritten news articles.
- 
+
 You are given two texts:
- 
+
 1. ORIGINAL — the original news article.
 2. REWRITTEN — the same article rewritten in an emotional style.
- 
-Your task is to determine whether REWRITTEN preserves the factual content of ORIGINAL.
- 
-IMPORTANT:
-The rewritten article is allowed to change STYLE.
-It is NOT allowed to change INFORMATION.
- 
+
+Your ONLY responsibility is to determine whether REWRITTEN preserves
+the factual information from ORIGINAL.
+
+==================================================
+MOST IMPORTANT RULE
+==================================================
+
+STYLE CHANGES ARE NOT FACTUAL VIOLATIONS.
+
+The purpose of the rewriting process is to change the style.
+
+Therefore, NEVER mark a rewrite as invalid merely because it contains:
+
+- irony;
+- sarcasm;
+- emotional language;
+- rhetorical questions;
+- humor;
+- stylistic transitions;
+- different sentence structures;
+- different paragraph structures;
+- stronger or more vivid wording that does NOT change factual meaning;
+- non-factual metaphors.
+
+For example:
+
+ORIGINAL:
+"Researchers examined 128 online posts."
+
+REWRITTEN:
+"Researchers examined 128 online posts — and the findings were hardly reassuring."
+
+VALID.
+
+The phrase "hardly reassuring" is stylistic and does not introduce
+a new factual claim.
+
 ==================================================
 CRITICAL RULES
 ==================================================
- 
+
 REWRITTEN MUST NOT:
- 
+
 1. Add facts that do not exist in ORIGINAL.
 2. Remove substantial facts from ORIGINAL.
 3. Change names of people.
@@ -62,316 +94,374 @@ REWRITTEN MUST NOT:
 10. Change percentages.
 11. Change monetary amounts.
 12. Change units of measurement.
-13. Change quantities or number of people.
-14. Change the order of factual events.
-15. Change causes or consequences.
-16. Change who made a statement.
-17. Change the certainty of a statement.
-18. Turn an allegation into an established fact.
-19. Turn a possibility into a certainty.
-20. Turn a reported claim into a confirmed fact.
-21. Add new actions, motivations or characteristics to people.
-22. Add historical information that does not exist in ORIGINAL.
-23. Add new locations or circumstances.
- 
+13. Change quantities.
+14. Change the number of people.
+15. Change the factual order of events.
+16. Change causes or consequences.
+17. Change who made a statement.
+18. Change the degree of certainty.
+19. Turn an allegation into an established fact.
+20. Turn a possibility into a certainty.
+21. Turn a reported claim into a confirmed fact.
+22. Add actions that did not happen.
+23. Add motivations that were not stated.
+24. Add characteristics that were not stated.
+25. Add historical information.
+26. Add locations or circumstances.
+27. Change the meaning of direct quotations.
+
 ==================================================
-NAMES AND PROPER NOUNS
+PROPER NAMES
 ==================================================
- 
-Names, organizations, companies, publications and geographical names
-must preserve their factual identity.
- 
-Translation of a proper noun may be acceptable only when it is clearly
-the standard translation of the same entity.
- 
-However, changing the entity itself is NOT acceptable.
- 
-For example:
- 
+
+Preserve the factual identity of:
+
+- people;
+- organizations;
+- companies;
+- publications;
+- geographical locations.
+
+Do not confuse different entities.
+
+A standard translation of a proper noun may be acceptable only if
+it clearly refers to the same entity.
+
+However, changing one entity into another entity is INVALID.
+
+Example:
+
 ORIGINAL:
 "International Journal of Cultural Property"
- 
+
 REWRITTEN:
 "International Journal of Cultural Heritage"
- 
-This is INVALID because these are different publication names.
- 
+
+INVALID if this refers to a different publication.
+
 ==================================================
 NUMBERS
 ==================================================
- 
-Numbers must remain exactly factually equivalent.
- 
+
+Numbers are critical factual information.
+
+Do NOT change:
+
+- numbers;
+- percentages;
+- dates;
+- years;
+- quantities;
+- measurements;
+- monetary amounts;
+- number of people.
+
+Example:
+
 ORIGINAL:
 "128 online posts"
- 
+
 REWRITTEN:
 "128 online posts"
- 
+
 VALID.
- 
+
 ORIGINAL:
 "128 online posts"
- 
+
 REWRITTEN:
 "500 online posts"
- 
+
 INVALID.
- 
-Do not allow approximate replacements such as:
- 
+
+Do not replace exact numbers with approximations:
+
 128 → about 100
-128 → hundreds
 128 → around 130
- 
-unless the original itself uses an approximation.
- 
+128 → hundreds
+
+These are INVALID unless the ORIGINAL itself uses such approximation.
+
 ==================================================
 DATES
 ==================================================
- 
-Dates must not change.
- 
-If ORIGINAL says:
- 
-"1923"
- 
-REWRITTEN must not say:
- 
-"1924"
-"the 1920s"
-"more than a century ago"
- 
-unless that wording preserves the exact factual meaning without losing
-the original date.
- 
+
+Dates and years must remain factually equivalent.
+
+ORIGINAL:
+"Carnarvon died in 1923."
+
+REWRITTEN:
+"Carnarvon died in 1923."
+
+VALID.
+
+Changing 1923 to 1924 is INVALID.
+
+Changing 1923 to "the 1920s" loses factual precision and is INVALID.
+
 ==================================================
 CERTAINTY
 ==================================================
- 
-Preserve the exact degree of certainty.
- 
+
+Preserve the factual certainty of every claim.
+
 These are NOT equivalent:
- 
+
 "may have contributed"
- 
-"did contribute"
- 
-"was responsible for"
- 
+
+"contributed"
+
 "caused"
- 
+
+"was responsible for"
+
 "proved"
- 
-Similarly:
- 
-"appeared to have"
- 
-"is believed to have"
- 
+
+Likewise:
+
+"appeared to"
+
+"is believed to"
+
 "reportedly"
- 
+
 "according to"
- 
+
 "confirmed"
- 
-must not be upgraded or downgraded in certainty.
- 
-However, replacing a hedge word with a SYNONYMOUS hedge word of the
-SAME certainty category is allowed and is NOT a violation. Only flag
-a change when the certainty CATEGORY itself changes (for example,
-hedged/possible becomes unhedged/confirmed, or vice versa).
- 
-Example of an ALLOWED change (same category — both are hedged,
-uncertain claims):
- 
+
+must not be changed into a different certainty level.
+
+However, synonymous expressions with the SAME certainty level
+are allowed.
+
+Example:
+
 ORIGINAL:
 "Traders appeared to have little awareness of the risks."
- 
+
 REWRITTEN:
-"Traders seemed to have almost no idea what risks they were running."
- 
-This is VALID. "appeared to" and "seemed to" are synonymous hedges,
-and "little awareness" and "almost no idea" describe the same degree
-of ignorance. No certainty category changed.
- 
-Example of a VIOLATION (category changes from hedged to confirmed):
- 
+"Traders seemed to have little awareness of the risks."
+
+VALID.
+
+Both statements are hedged observations.
+
+But:
+
 ORIGINAL:
 "Traders appeared to have little awareness of the risks."
- 
+
 REWRITTEN:
 "Traders had no awareness of the risks."
- 
-This is INVALID because the hedge ("appeared to") was dropped entirely,
-turning a possibility into a stated fact.
- 
+
+INVALID.
+
+The hedge was removed and the claim became stronger.
+
 ==================================================
-DIRECT QUOTES
+DIRECT QUOTATIONS
 ==================================================
- 
-Direct quotes are CRITICAL.
- 
-Any text presented as a direct quote in ORIGINAL must remain
-substantively and factually identical in REWRITTEN.
- 
-Do NOT allow:
- 
-- changing the meaning of a quote;
-- inventing a quote;
-- attributing a quote to another person;
-- adding words to a quote;
-- removing important parts of a quote;
-- changing factual claims inside a quote.
- 
-If the original article contains a direct quote and REWRITTEN
-substantially paraphrases it while presenting it as a quote,
-mark this as INVALID.
- 
+
+Direct quotations are protected factual content.
+
+If ORIGINAL contains a direct quotation, REWRITTEN must preserve
+its meaning exactly.
+
+Do NOT:
+
+- invent quotes;
+- attribute quotes to another person;
+- change the factual meaning of a quote;
+- reverse the meaning of a quote;
+- add factual claims inside a quote;
+- remove important factual content from a quote.
+
+If the rewrite presents a substantially changed statement as a quote,
+mark it INVALID.
+
 ==================================================
-LANGUAGE
+STYLE — DO NOT PENALIZE THIS
 ==================================================
- 
-REWRITTEN should normally use the same language as ORIGINAL.
- 
-If ORIGINAL is written in English, REWRITTEN should be in English.
- 
-If REWRITTEN is translated into another language without an explicit
-instruction to translate, mark this as INVALID.
- 
-Do not confuse ordinary stylistic rewriting with translation.
- 
-==================================================
-STYLE
-==================================================
- 
-The following changes are allowed:
- 
-- word choice;
-- sentence structure;
-- sentence length;
-- paragraph structure;
-- rhythm;
-- emotional tone;
+
+The following are explicitly allowed:
+
 - irony;
 - sarcasm;
 - rhetorical questions;
-- stylistic transitions;
-- non-factual metaphors.
- 
-However, stylistic additions must NOT introduce new factual claims.
- 
-For example:
- 
+- emotional wording;
+- humorous transitions;
+- stylistic emphasis;
+- metaphors that are clearly non-factual;
+- different sentence rhythm;
+- different paragraph structure.
+
+Example:
+
 ORIGINAL:
+"Sellers provided no safety guidance."
+
+REWRITTEN:
+"Sellers provided no safety guidance — because apparently safety
+wasn't part of the package."
+
+This is VALID if the second part is clearly rhetorical/stylistic
+and does not assert a new factual event.
+
+However:
+
+REWRITTEN:
+"Sellers deliberately ignored multiple safety warnings."
+
+This is INVALID if ORIGINAL does not state that sellers received
+or deliberately ignored safety warnings.
+
+==================================================
+LANGUAGE
+==================================================
+
+The rewritten article must normally remain in the same language
+as ORIGINAL.
+
+If ORIGINAL is English, REWRITTEN should be English.
+
+If ORIGINAL is Russian, REWRITTEN should be Russian.
+
+A translation into another language without explicit instruction
+is INVALID.
+
+==================================================
+SUBSTANTIAL CONTENT
+==================================================
+
+Do not require literal sentence matching.
+
+Synonyms and restructuring are allowed.
+
+However, all substantial factual information must remain.
+
+A rewrite that removes a substantial factual claim is INVALID.
+
+Example:
+
+ORIGINAL:
+"Researchers examined 128 online posts.
+The study found that traders appeared to have little awareness
+of the risks."
+
+REWRITTEN:
 "Researchers examined 128 online posts."
- 
-REWRITTEN:
-"Researchers examined 128 online posts — and the results were hardly reassuring."
- 
-This MAY be valid if "hardly reassuring" is clearly stylistic
-and does not introduce a new factual claim.
- 
-But:
- 
-ORIGINAL:
-"Researchers examined 128 online posts."
- 
-REWRITTEN:
-"Researchers examined 500 online posts."
- 
+
 INVALID.
- 
-Another example:
- 
-ORIGINAL:
-"Traders appeared to have little awareness of the risks."
- 
-REWRITTEN:
-"Traders were completely reckless and knew exactly what they were doing."
- 
-INVALID.
- 
-The rewritten version changes the characterization and certainty.
- 
+
+The second factual claim was removed.
+
 ==================================================
-DO NOT REQUIRE LITERAL MATCHING
+REQUIRED VALIDATION PROCESS
 ==================================================
- 
-Do not reject a rewrite simply because sentences are worded differently.
- 
-The following are allowed:
- 
-- synonyms;
-- different sentence structures;
-- different paragraph structures;
-- stylistic expressions;
-- emotional language.
- 
-Judge whether the underlying factual meaning remains unchanged.
- 
+
+Before deciding "valid", perform the following analysis internally:
+
+1. Identify the factual claims in ORIGINAL.
+
+2. For every factual claim, determine whether REWRITTEN preserves
+   the same factual meaning.
+
+3. Check all:
+   - names;
+   - organizations;
+   - publications;
+   - places;
+   - dates;
+   - numbers;
+   - percentages;
+   - quantities;
+   - people;
+   - quotes;
+   - causes;
+   - consequences;
+   - attributions;
+   - certainty levels.
+
+4. Identify any factual information added by REWRITTEN that is not
+   supported by ORIGINAL.
+
+5. Ignore purely stylistic additions.
+
+6. If ANY substantial factual information was removed, changed,
+   added, or given a different certainty level, valid MUST be false.
+
+7. If the only differences are stylistic, valid MUST be true.
+
 ==================================================
-REQUIRED PROCESS (do this before deciding)
+IMPORTANT
 ==================================================
- 
-Step 1: List every atomic factual claim from ORIGINAL as short items —
-this includes names, numbers, dates, places, quotes, causes, consequences,
-statements attributed to someone, and any claim about awareness, risk,
-intent, or certainty. Every sentence that carries information must produce
-at least one item.
- 
-Step 2: For each item, check whether it is present in REWRITTEN with the
-same meaning and the same degree of certainty. Mark it present or missing.
- 
-Step 3: If ANY item is missing, altered, or has a different certainty
-level, "valid" MUST be false and it MUST be described in "issues".
- 
+
+Do NOT mark the article invalid simply because it became:
+
+- ironic;
+- sarcastic;
+- emotional;
+- humorous;
+- rhetorically stronger.
+
+That is the intended purpose of the rewrite.
+
+Only factual changes are violations.
+
 ==================================================
-OUTPUT FORMAT
+OUTPUT
 ==================================================
- 
-Return ONLY valid JSON with this exact shape:
- 
+
+Return ONLY valid JSON.
+
+The JSON MUST have exactly this structure:
+
 {
   "facts_check": [
-    { "fact": "short description", "present_in_rewritten": true }
+    {
+      "fact": "short factual claim",
+      "present_in_rewritten": true
+    }
   ],
   "valid": true,
   "issues": []
 }
- 
-If there are violations, "valid" must be false and "issues" must list
-each one:
- 
+
+If there are factual violations:
+
 {
   "facts_check": [
-    { "fact": "short description", "present_in_rewritten": false }
+    {
+      "fact": "short factual claim",
+      "present_in_rewritten": false
+    }
   ],
   "valid": false,
   "issues": [
-    "description of the first factual violation",
-    "description of the second factual violation"
+    "description of the factual violation"
   ]
 }
- 
-The "facts_check" field MUST be an array of objects.
-The "valid" field MUST be a boolean.
-The "issues" field MUST be an array of strings.
- 
-Do NOT return markdown.
- 
-Do NOT return explanations outside JSON.
- 
+
+Rules:
+
+- "valid" MUST be boolean.
+- "issues" MUST be an array of strings.
+- "facts_check" MUST be an array.
+- "present_in_rewritten" MUST be boolean.
+- Do NOT return markdown.
+- Do NOT return explanations outside JSON.
+
 ==================================================
 ORIGINAL
 ==================================================
- 
+
 ${originalContent}
- 
+
 ==================================================
 REWRITTEN
 ==================================================
- 
+
 ${rewrittenContent}
           `,
         },
@@ -387,7 +477,11 @@ ${rewrittenContent}
     try {
       const parsed = JSON.parse(result);
 
-      if (typeof parsed.valid !== "boolean" || !Array.isArray(parsed.issues)) {
+      if (
+        typeof parsed.valid !== "boolean" ||
+        !Array.isArray(parsed.issues) ||
+        !Array.isArray(parsed.facts_check)
+      ) {
         throw new Error("Invalid validation result structure");
       }
 
@@ -399,8 +493,10 @@ ${rewrittenContent}
         );
       }
 
+      const valid = parsed.valid === true && missingNumbers.length === 0;
+
       return {
-        valid: parsed.valid && missingNumbers.length === 0,
+        valid,
         issues,
       };
     } catch (error) {

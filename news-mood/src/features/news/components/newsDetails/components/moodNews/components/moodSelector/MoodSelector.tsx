@@ -5,10 +5,12 @@ import { type MoodSelectorProps } from "./interface";
 import { type Mood, MOODS } from "@/features/news/types";
 import classes from "./MoodSelector.module.css";
 
-const MoodSelector = ({ onChange }: MoodSelectorProps) => {
+const MoodSelector = ({ onChange, disabled }: MoodSelectorProps) => {
   const [selectedMood, setSelectedMood] = useState<Mood>("neutral");
 
   const handleChange = (mood: Mood) => {
+    if (disabled) return;
+
     setSelectedMood(mood);
     onChange?.(mood);
   };
@@ -22,6 +24,7 @@ const MoodSelector = ({ onChange }: MoodSelectorProps) => {
           className={`${classes.option} ${
             selectedMood === mood.value ? classes.active : ""
           }`}
+          disabled={disabled}
           onClick={() => handleChange(mood.value)}
         >
           <span className={classes.emoji}>{mood.emoji}</span>

@@ -1,7 +1,5 @@
-import type { GuardianArticle } from "../../types";
-import { guardianMapper } from "../../mappers";
-
-const GUARDIAN_API_URL = "https://content.guardianapis.com/search";
+import type { GuardianArticle } from "@/features/news/types";
+import { guardianMapper } from "@/features/news/mappers";
 
 export const guardianService = {
   async getLatestNews() {
@@ -13,7 +11,7 @@ export const guardianService = {
       "order-by": "newest",
     });
 
-    const response = await fetch(`${GUARDIAN_API_URL}?${params}`);
+    const response = await fetch(`${process.env.GUARDIAN_API_URL}?${params}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch news from The Guardian");

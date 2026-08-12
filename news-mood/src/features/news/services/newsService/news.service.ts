@@ -1,4 +1,4 @@
-import { newsRepository } from "../../repositories";
+import { newsRepository } from "@/features/news/repositories";
 import { guardianService } from "../guardianService";
 
 export const newsService = {

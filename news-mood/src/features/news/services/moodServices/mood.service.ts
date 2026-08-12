@@ -1,7 +1,7 @@
-import { moodRewriter } from "../../ai";
+import { moodRewriter } from "@/features/news/ai";
 import { factValidator } from "../factValidator";
 
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 2;
 
 export const moodService = {
   async rewrite(content: string, mood: string) {

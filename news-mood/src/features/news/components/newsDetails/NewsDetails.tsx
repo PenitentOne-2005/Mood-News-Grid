@@ -31,7 +31,7 @@ const NewsDetails = ({ news }: NewsDetailProps) => {
             <span className={classes.badge}>Эмоциональная версия</span>
           </div>
 
-          <MoodNews content={news.content} />
+          <MoodNews content={news.content} newsId={news.id} />
         </article>
       </section>
 

@@ -1,8 +1,6 @@
 .page {
   min-height: 100vh;
   padding: 48px 0 64px;
-
-  background: #f7f7f7;
 }
 
 .header {
@@ -19,8 +17,6 @@
 .eyebrow {
   margin: 0 0 8px;
 
-  color: #777;
-
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -29,8 +25,6 @@
 
 .title {
   margin: 0;
-
-  color: #111;
 
   font-size: clamp(36px, 5vw, 56px);
   font-weight: 800;
@@ -41,8 +35,6 @@
 .description {
   max-width: 600px;
   margin: 16px 0 0;
-
-  color: #666;
 
   font-size: 17px;
   line-height: 1.5;
