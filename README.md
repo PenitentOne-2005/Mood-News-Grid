@@ -313,24 +313,6 @@ curl -X POST \
   }'
 ```
 
-Для проверки фактов используется endpoint:
-
-```text
-POST /api/news/mood/validate
-```
-
-Пример:
-
-```bash
-curl -X POST \
-  http://localhost:3000/api/news/mood/validate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "originalContent": "Researchers examined 128 online posts.",
-    "rewrittenContent": "Researchers examined 500 online posts."
-  }'
-```
-
 Ожидаемый результат:
 
 ```json
