@@ -32,6 +32,7 @@
 Склонировать репозиторий:
 
 git clone https://github.com/PenitentOne-2005/Mood-News-Grid.git
+
 cd news-mood
 
 ```bash
