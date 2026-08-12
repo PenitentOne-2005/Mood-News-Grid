@@ -33,13 +33,17 @@ const MoodNews = ({ content, newsId }: MoodNewsProps) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate mood news");
+        const result = await response.json();
+
+        throw new Error(
+          result.error || "Не удалось сгенерировать эмоциональную версию.",
+        );
       }
 
       const result = await response.json();
 
       if (!result.content) {
-        throw new Error("Mood API returned empty content");
+        throw new Error("EMPTY_CONTENT");
       }
 
       setMood(newMood);
@@ -48,10 +52,10 @@ const MoodNews = ({ content, newsId }: MoodNewsProps) => {
       console.error("Failed to generate mood news:", error);
 
       setError(
-        "Не удалось сгенерировать эмоциональную версию. Попробуйте ещё раз.",
+        error instanceof Error
+          ? error.message
+          : "Не удалось сгенерировать эмоциональную версию.",
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 

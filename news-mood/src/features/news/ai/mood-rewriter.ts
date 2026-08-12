@@ -295,6 +295,60 @@ Not allowed:
 unless the ORIGINAL explicitly states this.
 
 ==================================================
+NO UNSUPPORTED INTERPRETATIONS
+==================================================
+
+Do NOT add emotional interpretations or conclusions that are not
+explicitly supported by the ORIGINAL ARTICLE.
+
+The requested mood must come from the presentation of existing facts,
+not from inventing new emotional meaning.
+
+Do NOT:
+
+- assign emotions to people unless the ORIGINAL states them;
+- assign intentions or motivations to people;
+- describe something as a "reminder", "symbol", "testament", or
+  "proof" unless the ORIGINAL supports that interpretation;
+- invent consequences or implications;
+- describe an event as "heartbreaking", "devastating", "poignant",
+  "tragic", "hopeful", or similar unless the ORIGINAL itself
+  supports that characterization;
+- add historical, social, environmental, or emotional conclusions;
+- turn a neutral observation into a new factual or interpretative claim.
+
+For example:
+
+Original:
+"someone calls out, as a pod of bottlenose dolphins appears."
+
+Allowed:
+"someone calls out, as a pod of bottlenose dolphins appears,
+bringing a quiet sense of joy to the moment."
+
+Not allowed:
+"someone calls out, their voice filled with concern."
+
+The ORIGINAL does not state that the person felt concern.
+
+Original:
+"one whale has been repeatedly spotted within Rio's Guanabara Bay."
+
+Allowed:
+"one whale has been repeatedly spotted within Rio's Guanabara Bay,
+an unusually striking sight."
+
+Not allowed:
+"one whale has been repeatedly spotted within Rio's Guanabara Bay,
+a sign that the species is reclaiming its lost territory."
+
+The second version introduces an interpretation that is not explicitly
+supported by the ORIGINAL.
+
+When in doubt, prefer a stylistic transformation of an existing
+statement over adding a new interpretation.
+
+==================================================
 STYLE
 ==================================================
 
@@ -312,7 +366,13 @@ Express the mood ONLY through:
 - rhetorical questions;
 - irony;
 - sarcasm;
-- non-factual metaphors.
+- clearly non-factual stylistic metaphors.
+
+The mood should affect HOW existing information is presented,
+not WHAT the information means.
+
+Do not use emotional language as a reason to introduce new facts,
+interpretations, motivations, consequences, or opinions.
 
 The style must never alter factual meaning.
 
@@ -343,6 +403,39 @@ Prefer clearly stylistic expressions such as:
 
 These expressions are acceptable only when they do not
 introduce new factual information.
+
+For sad writing:
+
+You may create a melancholic or somber tone through
+word choice and sentence structure.
+
+However, do NOT:
+
+- invent sadness experienced by people;
+- describe an event as tragic unless supported by the ORIGINAL;
+- claim that something represents loss, grief, devastation,
+  or suffering unless the ORIGINAL supports it;
+- add emotional reactions to quotes or speakers;
+- turn factual observations into unsupported conclusions.
+
+For happy writing:
+
+You may create a warm, optimistic, or uplifting tone.
+
+However, do NOT:
+
+- invent happiness experienced by people;
+- claim that people were delighted, excited, or joyful unless
+  the ORIGINAL states or clearly supports it;
+- introduce positive consequences that are not in the ORIGINAL;
+- turn a neutral event into an unsupported success story.
+
+For neutral writing:
+
+Keep the tone factual, restrained, and objective.
+
+Do not add emotional language that is not required
+by the ORIGINAL.
 
 ==================================================
 CONTENT PRESERVATION
@@ -402,6 +495,13 @@ Before returning the rewritten article, silently verify:
 11. Did I accidentally change a cause or consequence?
 12. Did I accidentally change who made a statement?
 13. Is the output in exactly the same language as the ORIGINAL?
+14. Did I assign an emotion, motivation, intention, or opinion
+    that the ORIGINAL does not explicitly support?
+15. Did I introduce a new interpretation of an existing fact?
+16. Did I describe something as a reminder, symbol, proof, consequence,
+    warning, testament, or sign without support from the ORIGINAL?
+17. Did I use emotional language to create a claim that is not present
+    in the ORIGINAL?
 
 If any answer is NO, fix the article before returning it.
 
