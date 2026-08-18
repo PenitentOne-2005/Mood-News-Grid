@@ -9,19 +9,19 @@ const Home = () => {
           <span className={styles.label}>AI News Platform</span>
 
           <h1 className={styles.title}>
-            Новости в разных
+            News in various
             <br />
-            настроениях
+            sentiments
           </h1>
 
           <p className={styles.description}>
-            Mood News — приложение для просмотра реальных новостей и их
-            переписывания в разных эмоциональных стилях. Выберите настроение, а
-            AI изменит подачу текста, сохраняя факты оригинальной публикации.
+            Mood News — an app for viewing real news and rewriting it in various
+            emotional styles. Choose a mood, and the AI ​​will adjust the tone
+            while preserving the facts from the original publication.
           </p>
 
           <Link href="/news" className={styles.button}>
-            Смотреть новости
+            Watch the news
             <span aria-hidden="true">→</span>
           </Link>
         </section>
@@ -29,28 +29,27 @@ const Home = () => {
         <section className={styles.features}>
           <div className={styles.feature}>
             <span className={styles.featureNumber}>01</span>
-            <h2>Реальные новости</h2>
+            <h2>Real News</h2>
             <p>
-              Новости получаются из открытого источника и сохраняются в базе
-              данных.
+              News is obtained from an open source and stored in the database.
             </p>
           </div>
 
           <div className={styles.feature}>
             <span className={styles.featureNumber}>02</span>
-            <h2>Четыре настроения</h2>
+            <h2>Four Moods</h2>
             <p>
-              Happy, sad, neutral и ironic — одна новость может звучать
-              совершенно по-разному.
+              Happy, sad, neutral and ironic — a single piece of news can sound
+              completely different.
             </p>
           </div>
 
           <div className={styles.feature}>
             <span className={styles.featureNumber}>03</span>
-            <h2>Факты под защитой</h2>
+            <h2>Facts Under Protection</h2>
             <p>
-              AI-валидатор проверяет сохранение чисел, имён, дат, цитат и других
-              важных фактов.
+              The AI ​​validator checks for the preservation of numbers, names,
+              dates, quotes, and other important facts.
             </p>
           </div>
         </section>

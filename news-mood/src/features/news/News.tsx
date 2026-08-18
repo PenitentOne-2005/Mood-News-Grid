@@ -8,10 +8,10 @@ const News = ({ news }: NewsProps) => {
       <header className={classes.header}>
         <p className={classes.eyebrow}>Mood News</p>
 
-        <h1 className={classes.title}>Новости</h1>
+        <h1 className={classes.title}>News</h1>
 
         <p className={classes.description}>
-          Реальные новости в разных эмоциональных режимах.
+          Real news in various emotional modes.
         </p>
       </header>
 
