@@ -1,10 +1,10 @@
 # News Mood
 
-Веб-приложение для просмотра реальных новостей и их переписывания в разных эмоциональных стилях: `happy`, `sad`, `neutral`, `ironic`.
+A web application for viewing real news and rewriting it in various emotional styles.: `happy`, `sad`, `neutral`, `ironic`.
 
-Главная задача проекта — изменить тон подачи новости, **не изменяя её фактическое содержание**.
+The project's main goal is to change the tone of news delivery, **without altering its actual content**.
 
-## Технологии
+## Technologies
 
 - **Next.js 16.3.0**
 - **React 19.2.8**
@@ -14,22 +14,22 @@
 - **Groq API / groq-sdk 1.5.0**
 - ESLint
 
-## Возможности
+## Possibilities
 
-- получение реальных новостей из открытого источника;
-- сохранение новостей в PostgreSQL;
-- отображение новостей в виде грида;
-- просмотр оригинальной новости;
-- ссылка на исходный источник;
-- переключение эмоционального тона;
-- AI-переписывание новости;
-- автоматическая проверка сохранения фактов после переписывания.
+- obtaining real news from an open source;
+- saving news in PostgreSQL;
+- displaying news in a grid layout;
+- view original news item;
+- link to the original source;
+- shifting the emotional tone;
+- AI rewriting of the news story;
+- automatic verification of fact preservation after rewriting.
 
-## Как запустить проект
+## How to launch a project
 
-### 1. Установить зависимости
+### 1. Install dependencies
 
-Склонировать репозиторий:
+Clone the repository:
 
 git clone https://github.com/PenitentOne-2005/Mood-News-Grid.git
 
@@ -39,137 +39,133 @@ cd news-mood
 npm install
 ```
 
-### 2. Настроить PostgreSQL
+### 2. Configure PostgreSQL
 
-Проект использует **PostgreSQL** и **Prisma**.
+The project uses **PostgreSQL** and **Prisma**.
 
-Необходимо иметь запущенный PostgreSQL и создать базу данных для проекта:
+You need to have PostgreSQL running and create a database for the project:
 
 ```text
 news_mood
 ```
 
-После этого создайте файл `.env` в корне проекта.
+After that, create a file. `.env` at the root of the project.
 
-Пример:
+Example:
 
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/news_mood?schema=public"
 ```
 
-`USER`, `PASSWORD` и другие параметры PostgreSQL необходимо заменить на свои.
+`USER`, `PASSWORD` and other PostgreSQL parameters need to be replaced with your own.
 
-### 3. Получить Groq API Key & Guardian API Key
+### 3. Get Groq API Key & Guardian API Key
 
-Для работы AI-функционала нужен собственный API-ключ Groq.
+A personal API key is required for the AI ​​functionality to work Groq.
 
-1. Зарегистрируйтесь на Groq.
-2. Откройте раздел API Keys в консоли Groq.
-3. Создайте новый API key.
-4. Добавьте его в `.env`:
+1. Sign up at Groq.
+2. Open the API Keys section in the Groq console..
+3. Create a new one API key.
+4. Add it to `.env`:
 
 ```env
 GROQ_API_KEY="ваш_ключ"
 ```
 
-API-ключ нельзя добавлять в Git или хранить в клиентском коде.
-
-Файл `.env` должен оставаться локальным и не должен попадать в репозиторий.
-
 ### GUARDIAN_API_KEY
 
-Проект получает реальные новости из открытого API The Guardian, поэтому для запуска необходимо получить собственный API key.
+The project retrieves real news from The Guardian's public API, so you need to obtain your own API key to run it.
 
-1. Перейдите на официальный сайт The Guardian Open Platform:
+1. Go to the official website The Guardian Open Platform:
    https://open-platform.theguardian.com/access/
 
-2. Зарегистрируйтесь или войдите в аккаунт.
+2. Sign up or log in to your account.
 
-3. Создайте API key для использования Guardian Content API.
+3. Create an API key to use the Guardian Content API.
 
-4. Добавьте полученный ключ в `.env`:
+4. Add the received key to `.env`:
 
 ```env
 GUARDIAN_API_KEY=your_guardian_api_key
 ```
 
-### 4. Установить зависимости Prisma и создать базу
+### 4. Install Prisma dependencies and create the database
 
-После настройки `DATABASE_URL` выполните:
+After configuration `DATABASE_URL` execute:
 
 ```bash
 npx prisma migrate dev
 ```
 
-Эта команда применит Prisma migrations и создаст необходимые таблицы в PostgreSQL.
+This command will apply Prisma migrations and create the necessary tables in PostgreSQL.
 
-### 5. Запустить приложение
+### 5. Launch the application
 
-Для разработки:
+For development:
 
 ```bash
 npm run dev
 ```
 
-После этого приложение будет доступно по адресу:
+After that, the application will be available at the following address:
 
 ```text
 http://localhost:3000
 ```
 
-Для production:
+For production:
 
 ```bash
 npm run build
 npm start
 ```
 
-## Откуда берутся новости
+## Where news comes from
 
-Приложение работает с **реальными новостями из открытого источника**, а не с заранее написанными тестовыми текстами.
+The application works with **real news from an open source**, and not with pre-written test texts.
 
-Каждая новость сохраняется вместе с информацией об источнике, включая ссылку на оригинальную публикацию.
+Each news item is saved along with information about the source, including a link to the original publication.
 
-Таким образом, пользователь может открыть оригинальный материал и проверить источник новости.
+Thus, the user can open the original material and verify the news source.
 
-## Хранение данных
+## Data storage
 
-Для хранения используется **PostgreSQL**.
+Used for storage **PostgreSQL**.
 
-Доступ к базе данных осуществляется через **Prisma ORM**.
+Access to the database is provided via **Prisma ORM**.
 
-Структура базы данных описана в:
+The structure of the database is described in:
 
 ```text
 prisma/schema.prisma
 ```
 
-Изменения структуры базы данных оформлены через Prisma migrations.
+Changes to the database structure are formalized through Prisma migrations.
 
-При запуске нового окружения необходимо применить миграции:
+When launching a new environment, it is necessary to apply migrations:
 
 ```bash
 npx prisma migrate dev
 ```
 
-Это позволяет другому разработчику получить ту же структуру базы данных без необходимости создавать таблицы вручную.
+This allows another developer to obtain the same database structure without having to create the tables manually.
 
-## Как работает переписывание тона
+## How tone rewriting works
 
-Пользователь выбирает одно из четырёх настроений:
+The user selects one of four moods:
 
-- `happy` — радостное;
-- `sad` — грустное;
-- `neutral` — нейтральное;
-- `ironic` — ироничное.
+- `happy`;
+- `sad`;
+- `neutral`;
+- `ironic`.
 
-После выбора настроение отправляется на API:
+After the selection is made, the mood is sent to the API:
 
 ```text
 POST /api/news/mood
 ```
 
-В запрос передаются:
+The following are passed to the request:
 
 ```json
 {
@@ -178,29 +174,29 @@ POST /api/news/mood
 }
 ```
 
-Сервер получает оригинальный текст новости из базы данных и передаёт его AI-модели вместе с инструкциями по переписыванию.
+The server retrieves the original news text from the database and passes it to the AI ​​model along with rewriting instructions.
 
-Используется модель:
+A model is used:
 
 ```text
 llama-3.3-70b-versatile
 ```
 
-AI менят только способ подачи информации:
+AI only changes the way information is presented:
 
-- лексику;
-- эмоциональный тон;
-- ритм предложений;
-- структуру предложений;
-- стилистические элементы.
+- vocabulary;
+- emotional tone;
+- sentence rhythm;
+- sentence structure;
+- stylistic elements.
 
-При этом не изменяет фактическую информацию.
+At the same time, it does not alter the factual information.
 
-## Контроль сохранения фактов
+## Verification of fact preservation
 
-Для контроля используется отдельный **Fact Validator**.
+A separate one is used for monitoring **Fact Validator**.
 
-После генерации переписанного текста система сравнивает:
+After generating the rewritten text, the system compares:
 
 ```text
 ORIGINAL
@@ -212,32 +208,32 @@ REWRITTEN
 Fact Validator
 ```
 
-Валидатор проверяет, в частности:
+The validator checks, in particular:
 
-- имена людей;
-- названия организаций;
-- компании;
-- публикации;
-- географические названия;
-- даты;
-- числа;
-- проценты;
-- денежные суммы;
-- единицы измерения;
-- количества;
-- последовательность событий;
-- причины и последствия;
-- авторство утверждений;
-- степень уверенности утверждений;
-- прямые цитаты;
-- отсутствие новых фактов;
-- отсутствие существенных пропусков.
+- people's names;
+- names of organizations;
+- companies;
+- publications;
+- geographical names;
+- dates;
+- numbers;
+- interest;
+- sums of money;
+- units of measurement;
+- quantities;
+- sequence of events;
+- causes and consequences;
+- authorship of the statements;
+- degree of confidence in the statements;
+- direct quotes;
+- absence of new facts;
+- absence of significant gaps.
 
-### Дополнительная проверка чисел
+### Additional number verification
 
-Помимо AI-проверки, числа проверяются программно.
+In addition to AI verification, the numbers are checked programmatically.
 
-Например, если оригинал содержит:
+For example, if the original contains:
 
 ```text
 128 online posts
@@ -245,17 +241,17 @@ Fact Validator
 1923
 ```
 
-эти значения должны присутствовать в переписанном тексте.
+These values ​​must be present in the rewritten text.
 
-Если число отсутствует, результат считается невалидным.
+If the number is missing, the result is considered invalid.
 
-Это дополнительный слой защиты от ошибок AI.
+This is an additional layer of protection against AI errors.
 
-## Что происходит при ошибке валидации
+## What happens during a validation error
 
-Если Fact Validator обнаруживает нарушение, переписанный текст не принимается сразу.
+If the Fact Validator detects a violation, the rewritten text is not accepted immediately.
 
-Обнаруженные проблемы передаются обратно в Mood Rewriter:
+The issues found are passed back to Mood Rewriter:
 
 ```text
 Original article
@@ -273,35 +269,35 @@ New rewrite
 Fact Validator
 ```
 
-Количество попыток ограничено, чтобы избежать бесконечных запросов к AI API.
+The number of attempts is limited to avoid endless requests to the AI ​​API.
 
-Если после максимального количества попыток текст всё ещё не проходит проверку, API возвращает ошибку вместо потенциально некорректного текста.
+If the text still fails validation after the maximum number of attempts, the API returns an error instead of the potentially incorrect text.
 
-## AI в проекте
+## AI in the project
 
-AI используется для двух задач:
+AI is used for two tasks:
 
 ### 1. Mood Rewriter
 
-Отвечает за переписывание новости в выбранном эмоциональном стиле.
+Responsible for rewriting the news item in a selected emotional style.
 
 ### 2. Fact Validator
 
-Проверяет, сохранил ли переписанный текст фактическое содержание оригинальной новости.
+Checks whether the rewritten text has preserved the factual content of the original news story.
 
-Таким образом, AI используется не только для генерации текста, но и для его последующей проверки.
+Thus, AI is used not only for generating text but also for subsequently verifying it.
 
-Дополнительно критичные числовые значения проверяются обычным программным кодом.
+Additionally, critical numerical values ​​are checked using standard program code.
 
 ## API
 
-Основной endpoint для генерации эмоциональной версии:
+The main endpoint for generating the emotional version:
 
 ```text
 POST /api/news/mood
 ```
 
-Пример:
+Example:
 
 ```bash
 curl -X POST \
@@ -313,7 +309,7 @@ curl -X POST \
   }'
 ```
 
-Ожидаемый результат:
+Expected result:
 
 ```json
 {
@@ -325,9 +321,9 @@ curl -X POST \
 }
 ```
 
-## Переменные окружения
+## Environment variables
 
-Необходимые переменные:
+Required variables:
 
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/news_mood?schema=public"
@@ -336,42 +332,42 @@ GUARDIAN_API_KEY="your_guardian_api_key"
 GUARDIAN_API_URL="https://content.guardianapis.com/search"
 ```
 
-Перед запуском убедитесь, что:
+Before starting, make sure that:
 
-- PostgreSQL запущен;
-- `DATABASE_URL` указывает на доступную базу;
-- Prisma migrations применены;
-- `GROQ_API_KEY` указан корректно;
-- `GUARDIAN_API_KEY` указан корректно;
-- `GUARDIAN_API_URL` указан корректно.
+- PostgreSQL launched;
+- `DATABASE_URL` points to an available database;
+- Prisma migrations applied;
+- `GROQ_API_KEY` is specified correctly;
+- `GUARDIAN_API_KEY` is specified correctly;
+- `GUARDIAN_API_URL` is specified correctly.
 
-## Скрипты
+## Scripts
 
 ```bash
 npm run dev
 ```
 
-Запуск development-сервера.
+Launching the development server.
 
 ```bash
 npm run build
 ```
 
-Production-сборка.
+Production assembly.
 
 ```bash
 npm start
 ```
 
-Запуск production-сервера.
+Launching the production server.
 
 ```bash
 npm run lint
 ```
 
-Проверка кода ESLint.
+ESLint code checking.
 
-## Итоговая архитектура AI-части
+## Final architecture of the AI ​​component
 
 ```text
 Real News
@@ -402,22 +398,21 @@ Fact Validator
      Mood Rewriter
 ```
 
-Главный принцип проекта:
+The project's core principle:
 
-> **AI может менять настроение текста, но не должен менять факты.**
-
+> **AI can change the tone of a text, but it should not alter the facts.**
 
 ## Screenshots
 
-### Главная страница
+### Home Page
 
 ![Главная страница](./news-mood/screenshots/home.png)
 
-### Список новостей
+### List of news items
 
 ![Список новостей](./news-mood/screenshots/news.png)
 
-### Страница новости
+### News page
 
 ![Страница новости](./news-mood/screenshots/news-detail-header.png)
 
