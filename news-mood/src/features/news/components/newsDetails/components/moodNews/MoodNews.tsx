@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { MoodNewsProps } from "./interface";
 import type { Mood } from "@/features/news";
+import { newsService } from "@/features/news/services/newsService";
 import { MoodSelector } from "./components";
 import classes from "./MoodNews.module.css";
 
@@ -21,33 +22,10 @@ const MoodNews = ({ content, newsId }: MoodNewsProps) => {
     setError(null);
 
     try {
-      const response = await fetch("/api/news/mood", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          newsId,
-          mood: newMood,
-        }),
-      });
-
-      if (!response.ok) {
-        const result = await response.json();
-
-        throw new Error(
-          result.error || "Не удалось сгенерировать эмоциональную версию.",
-        );
-      }
-
-      const result = await response.json();
-
-      if (!result.content) {
-        throw new Error("EMPTY_CONTENT");
-      }
+      const content = await newsService.generateMood(newsId, newMood);
 
       setMood(newMood);
-      setMoodContent(result.content);
+      setMoodContent(content);
     } catch (error) {
       console.error("Failed to generate mood news:", error);
 
@@ -56,6 +34,8 @@ const MoodNews = ({ content, newsId }: MoodNewsProps) => {
           ? error.message
           : "Не удалось сгенерировать эмоциональную версию.",
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
