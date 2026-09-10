@@ -23,8 +23,9 @@ export const factValidator = {
     );
 
     const completion = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       temperature: 0,
+      max_tokens: 6000,
       response_format: {
         type: "json_object",
       },
@@ -33,6 +34,7 @@ export const factValidator = {
           role: "system",
           content: `
 You are a strict factual validator for rewritten news articles.
+You MUST respond strictly in valid JSON format using the required JSON schema.
 
 You are given two texts:
 

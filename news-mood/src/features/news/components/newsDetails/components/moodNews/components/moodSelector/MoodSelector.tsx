@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { type MoodSelectorProps } from "./interface";
+import type { MoodSelectorProps } from "./interface";
 import { type Mood, MOODS } from "@/features/news/types";
 import classes from "./MoodSelector.module.css";
 
