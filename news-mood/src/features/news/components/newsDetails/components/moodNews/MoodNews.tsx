@@ -41,17 +41,25 @@ const MoodNews = ({ content, newsId }: MoodNewsProps) => {
 
   return (
     <div className={classes.wrapper}>
-      <MoodSelector onChange={handleMoodChange} disabled={isLoading} />
+      <MoodSelector
+        value={mood}
+        onChange={handleMoodChange}
+        disabled={isLoading}
+      />
 
-      <div className={classes.status}>
+      <div className={classes.status} aria-live="polite">
         <span className={classes.statusLabel}>Настроение</span>
 
         <span className={classes.mood}>{mood}</span>
       </div>
 
-      {error ? <div className={classes.error}>{error}</div> : null}
+      {error ? (
+        <div className={classes.error} role="alert" aria-live="assertive">
+          {error}
+        </div>
+      ) : null}
 
-      <div className={classes.content}>
+      <div className={classes.content} aria-live="polite" aria-busy={isLoading}>
         {isLoading ? (
           <p>Генерация эмоциональной версии...</p>
         ) : (

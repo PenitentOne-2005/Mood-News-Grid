@@ -1,31 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import type { MoodSelectorProps } from "./interface";
-import { type Mood, MOODS } from "@/features/news/types";
+import { MOODS } from "@/features/news/types";
 import classes from "./MoodSelector.module.css";
 
-const MoodSelector = ({ onChange, disabled }: MoodSelectorProps) => {
-  const [selectedMood, setSelectedMood] = useState<Mood>("neutral");
-
-  const handleChange = (mood: Mood) => {
-    if (disabled) return;
-
-    setSelectedMood(mood);
-    onChange?.(mood);
-  };
-
+const MoodSelector = ({ value, onChange, disabled }: MoodSelectorProps) => {
   return (
-    <div className={classes.selector}>
+    <div
+      className={classes.selector}
+      role="group"
+      aria-label="Выбор настроения"
+    >
       {MOODS.map((mood) => (
         <button
           key={mood.value}
           type="button"
-          className={`${classes.option} ${
-            selectedMood === mood.value ? classes.active : ""
-          }`}
+          className={classes.option}
           disabled={disabled}
-          onClick={() => handleChange(mood.value)}
+          aria-pressed={value === mood.value}
+          onClick={() => onChange?.(mood.value)}
         >
           <span className={classes.emoji}>{mood.emoji}</span>
           <span>{mood.label}</span>

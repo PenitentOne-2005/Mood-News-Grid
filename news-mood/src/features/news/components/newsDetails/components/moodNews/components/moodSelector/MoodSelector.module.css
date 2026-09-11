@@ -45,14 +45,12 @@
     outline: 2px solid #000000;
     outline-offset: 2px;
   }
-}
 
-.active {
-  background: #fff;
-
-  color: #171717;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  &[aria-pressed="true"] {
+    background: #fff;
+    color: #171717;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .emoji {

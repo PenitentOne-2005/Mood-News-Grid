@@ -7,7 +7,10 @@ const NewsDetails = ({ news }: NewsDetailProps) => {
     <main className={classes.page}>
       <header className={classes.header}>
         <p className={classes.source}>
-          {news.sourceName} · {news.publishedAt.toLocaleDateString("ru-RU")}
+          {news.sourceName} <span aria-hidden="true"> · </span>
+          <time dateTime={news.publishedAt.toISOString()}>
+            {news.publishedAt.toLocaleDateString("ru-RU")}
+          </time>
         </p>
 
         <h1 className={classes.title}>{news.title}</h1>
@@ -28,9 +31,8 @@ const NewsDetails = ({ news }: NewsDetailProps) => {
 
         <article className={classes.mood}>
           <div className={classes.sectionHeader}>
-            <span className={classes.badge}>Эмоциональная версия</span>
+            <span className={classes.badge}>Оригинал</span>
           </div>
-
           <MoodNews content={news.content} newsId={news.id} />
         </article>
       </section>

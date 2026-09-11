@@ -9,7 +9,9 @@ const NewsCard = ({ news }: NewsCardProps) => {
           <div className={classes.meta}>
             <span>{news.sourceName}</span>
 
-            <span className={classes.separator}>•</span>
+            <span className={classes.separator} aria-hidden="true">
+              •
+            </span>
 
             <time dateTime={news.publishedAt.toISOString()}>
               {news.publishedAt.toLocaleDateString("ru-RU")}
