@@ -35,7 +35,7 @@ including information that was not mentioned in the validator feedback.
     const completion = await groq.chat.completions.create({
       model: "openai/gpt-oss-20b",
       temperature: 0.1,
-      max_tokens: 6000,
+      max_tokens: 10000,
       messages: [
         {
           role: "system",

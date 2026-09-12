@@ -25,7 +25,7 @@ export const factValidator = {
     const completion = await groq.chat.completions.create({
       model: "openai/gpt-oss-20b",
       temperature: 0,
-      max_tokens: 6000,
+      max_tokens: 10000,
       response_format: {
         type: "json_object",
       },
